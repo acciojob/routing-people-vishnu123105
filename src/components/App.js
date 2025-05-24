@@ -5,24 +5,23 @@ import { Route, Switch, Link } from "react-router-dom";
 const Home = () => {
   const [data, setDate] = useState([]);
   const [isloading, setIsloading] = useState(true);
+
   useEffect(() => {
     setIsloading(true);
     fetch("https://jsonplaceholder.typicode.com/users/")
       .then((res) => res.json())
       .then(setDate)
       .catch((err) => console.log(err))
-      .finally(() => {
-        setIsloading(false);
-      });
+      .finally(() => setIsloading(false));
   }, []);
   return isloading ? (
-    <div>Loading...</div>
+    <h1>Loading...</h1>
   ) : (
     <>
-      <h2>Users List</h2>
+      <h1>Users List</h1>
       <ul>
         {data.map((e) => (
-          <li>
+          <li key={e.id}>
             <Link to={`/users/${e.id}`}>{e.name}</Link>
           </li>
         ))}
@@ -34,20 +33,19 @@ const Home = () => {
 const User = () => {
   const [data, setDate] = useState([]);
   const [isloading, setIsloading] = useState(true);
-  const id = window.location.pathname.split("/").reverse()[0]
+  const id = window.location.pathname.split("/").reverse()[0];
   console.log(id);
+
   useEffect(() => {
     setIsloading(true);
     fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
       .then((res) => res.json())
       .then(setDate)
       .catch((err) => console.log(err))
-      .finally(() => {
-        setIsloading(false);
-      });
+      .finally(() => setIsloading(false));
   }, []);
   return isloading ? (
-    <div>Loading...</div>
+    <h1>Loading...</h1>
   ) : (
     <>
       <h1>User Details</h1>
@@ -76,43 +74,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-// const Home=()=>{
-//   const[data,setData]=useState([]);
-//   useEffect(()=>{
-//   fetch("https://jsonplaceholder.typicode.com/users/").then(setData).catch((error)=>console.log(error))
-//   });
-//   return (
-//     <>
-//     <h2>User List</h2>
-//     <ul>
-//       <li>
-        
-//       </li>
-//     </ul>
-//     </>
-//   )
-// }
-// const About=()=>{
-//   return (
-//     <>
-
-//     </>
-//   )
-// }
-// const App = () => {
-
-//   return (
-//     <div>
-//       <Switch>
-//         <Route path="/" Home/>
-//         <Route path="about/:1" About/>
-//       </Switch>
-//     </div>
-//   )
-// }
-
-// export default App
-
